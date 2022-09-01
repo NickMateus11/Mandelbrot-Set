@@ -51,15 +51,25 @@ def compute_mandelbrot(rect, mandel_range, max_it):
             
             # color = (it / max_iter, 0.8, 0.8 if it<max_iter else 0)
             # c = tuple([int(c*255) for c in colorsys.hsv_to_rgb(*color)])
-            a = 0.1
-            n = it
+           
             # interesting colouring formula
-            c = (0.5 * math.sin(a * n + 4.188) + 0.5) * 128 + 127, \
-                (0.5 * math.sin(a * n) + 0.5) * 128 + 127, \
-                (0.5 * math.sin(a * n + 2.094) + 0.5) * 128 + 127
+            # a = 0.1
+            # n = it
+            # c = (0.5 * math.sin(a * n + 4.188) + 0.5) * 128 + 127, \
+            #     (0.5 * math.sin(a * n) + 0.5) * 128 + 127, \
+            #     (0.5 * math.sin(a * n + 2.094) + 0.5) * 128 + 127
+
+            mfactor = 0.5 + (1/10)**0.1/(3)**0.1
+            v = it**(mfactor)/max_it**mfactor
+            hv = 0.67-v
+            if hv<0: hv+=1
+            r,g,b = colorsys.hsv_to_rgb(hv,1,1-(v-0.1)**2/0.9**2)
+            r = min(255,round(r*255))
+            g = min(255,round(g*255))
+            b = min(255,round(b*255))
+            c = (int(r) , int(g) , int(b))
                 
             pixel_arr[px,py] = c
-            # pixel_arr[px,(screen_rect.h-1)-py] = c
 
     pixel_arr.close()
 
