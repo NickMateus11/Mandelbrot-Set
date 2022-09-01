@@ -1,6 +1,7 @@
 import pygame
 import colorsys
 import time
+import math
   
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -48,8 +49,15 @@ def compute_mandelbrot(rect, mandel_range, max_it):
                 y2=y*y
                 it += 1
             
-            color = (it / max_iter, 0.8, 0.8 if it<max_iter else 0)
-            c = tuple([int(c*255) for c in colorsys.hsv_to_rgb(*color)])
+            # color = (it / max_iter, 0.8, 0.8 if it<max_iter else 0)
+            # c = tuple([int(c*255) for c in colorsys.hsv_to_rgb(*color)])
+            a = 0.1
+            n = it
+            # interesting colouring formula
+            c = (0.5 * math.sin(a * n + 4.188) + 0.5) * 128 + 127, \
+                (0.5 * math.sin(a * n) + 0.5) * 128 + 127, \
+                (0.5 * math.sin(a * n + 2.094) + 0.5) * 128 + 127
+                
             pixel_arr[px,py] = c
             # pixel_arr[px,(screen_rect.h-1)-py] = c
 
